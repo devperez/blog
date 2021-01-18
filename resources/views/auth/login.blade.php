@@ -1,32 +1,46 @@
 <!DOCTYPE html>
-<html class="h-full" lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-
-        <title>Connexion</title>
-
-        <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
-
-    </head>
-    <body class="bg-gray-200 flex content-center justify-center h-full items-center">
-        <div class="bg-white shadow-lg max-w-lg md:flex">
-            <img class="flex-1 w-full h-40 md:h-full" src="{{asset('img/autumn.jpg')}}">
-            <form action="" method="GET" class="flex-1 p-4 md:flex md:flex-col justify-center">
-                <h1 class="text-2xl font-bold text-gray-800 mb-2 text-center">- Connexion -</h1>
-                <div class="mb-4">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>Login</title>
+</head>
+<body>
+    <div class="container">
+        <div class="row" style="margin-top:80px">
+            <div class="col-md-6 col-md-offset-4">
+                <h4>User login</h4>
+                <hr />
+                <form action="{{ route('auth.check') }}" method="POST">
                     @csrf
-                    <label class="block text-gray-600 mb-2" for="username">Votre e-mail :</label>
-                    <input class="border-2 border-gray-500 focus:ring-1 ring-gray-800" type="email" id="email" name="email" placeholder="Votre email">
-                </div>
-                <div>
-                    <label class="block text-gray-600 mb-2" for="password">Votre mot de passe :</label>
-                    <input class="border-2 border-gray-500 focus:ring-1 ring-gray-800" type="password" id="password" name="password" placeholder="Votre mot de passe">
-                </div>
-               <button type="submit" class="mt-2 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Connexion !</button>
-               <br />
-                <a class="text-blue-600 text-center" href="register"><p>Créer un compte</p></a>
-            </form>
+                    <div class="results">
+                        @if(Session::get('fail'))
+                        <div class="alert alert-danger">
+                            {{ Session::get('fail')}}
+                        </div>
+                        @endif
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="text" class="form-control" name="email" placeholder="Enter your email" value="{{ old('email') }}">
+                        <span class="text-danger">@error('email'){{ $message }} @enderror</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="">Password</label>
+                        <input type="password" class="form-control" name="password" placeholder="Enter your password">
+                        <span class="text-danger">@error('password'){{ $message }} @enderror</span>
+
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-block btn-primary">Login</button>
+                    </div>
+                    <br />
+                    <a href="register">Create a new account now !</a>
+                </form>
+            </div>
         </div>
-    </body>
+    </div>
+</body>
 </html>
